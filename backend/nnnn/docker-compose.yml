@@ -1,0 +1,23 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  db:
+    image: python:3.10-slim
+    volumes:
+      - ./backend/db.sqlite3:/app/db.sqlite3
+    command: tail -f /dev/null
